@@ -10,6 +10,7 @@ from opencv.opencv_functions import Image, find_latest_image
 from opencv.color_hsv import hsv_ranges
 import numpy as np
 
+
 class ImageSaver(Node):
     def __init__(self):
         super().__init__('image_saver')
@@ -32,8 +33,10 @@ class ImageSaver(Node):
             self.get_logger().error("Failed to decode image")
             self.counter += 1
             return
-        cv2.imwrite(os.path.join(self.output_dir, f"{self.counter}.jpg"), img)
-
+        cv2.imwrite(os.path.join(self.output_dir, f"{self.counter}.jpg"), img)  # remove later
+        # with open(self.output_dir + str(self.counter) + '.jpg', 'wb') as f:
+        #     self.get_logger().info(f'Saving image {self.counter}')
+        #     f.write(msg.data)
         # image_path = find_latest_image()
         # img = cv2.imread(image_path)
         image = Image(img)
@@ -43,7 +46,6 @@ class ImageSaver(Node):
         else:
             self.get_logger().info("LED off")
         self.counter += 1
-
 
 
 def main():

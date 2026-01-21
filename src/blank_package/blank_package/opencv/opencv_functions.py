@@ -10,22 +10,6 @@ class Image:
     def __init__(self, img):
         self.img = img
 
-    def find_latest_image(self):
-        folder = "images"
-        pattern = re.compile(r"image(\d+)\.jpg")
-
-        max_num = -1
-        max_file = None
-
-        for filename in os.listdir(folder):
-            match = pattern.fullmatch(filename)
-            if match:
-                num = int(match.group(1))
-                if num > max_num:
-                    max_num = num
-                    max_file = filename
-        return f"images/{max_file}"
-
     def show_image(self, img):
         cv2.imshow("img", img)
         cv2.waitKey(0)
@@ -158,6 +142,20 @@ class Image:
             print(f"{percentage_deviation}% away from middle")
         return standard_deviation
 
+
+def find_latest_image():
+    folder = "images"
+    pattern = re.compile(r"image(\d+)\.jpg")
+    max_num = -1
+    max_file = None
+    for filename in os.listdir(folder):
+        match = pattern.fullmatch(filename)
+        if match:
+            num = int(match.group(1))
+            if num > max_num:
+                max_num = num
+                max_file = filename
+    return f"images/{max_file}"
 
 # def main():
 #     # file_path = find_latest_image()

@@ -3,7 +3,7 @@ import os
 import re
 import numpy as np
 from opencv.color_hsv import hsv_ranges
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 class Image:

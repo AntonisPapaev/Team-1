@@ -16,7 +16,7 @@ class ImageSaver(Node):
         os.makedirs(self.output_dir, exist_ok=True)
         self.vehicle_name = os.getenv('VEHICLE_NAME')
         self.counter = 0
-        self.create_subscription(CompressedImage, f'/opencv/images', self.save_image, 10)
+        self.create_subscription(CompressedImage, f'{self.vehicle_name}/image/compressed', self.save_image, 10)
 
     def save_image(self, msg):
         self.get_logger().info("in save_image")

@@ -23,8 +23,8 @@ class RobotController(Node):
             self.command_callback,
             10
         )
-        self.wheels_pub = self.create_publisher(WheelsCmdStamped, f'/{self.vehicle_name}/wheels_cmd', 10)
-        self.led_pub = self.create_publisher(LEDPattern, f'{self.vehicle_name}/led_pattern', 10)
+        self.wheels_pub = self.create_publisher(WheelsCmdStamped, f'/{self.vehicle_name}/wheels_cmd', 2)
+        self.led_pub = self.create_publisher(LEDPattern, f'{self.vehicle_name}/led_pattern', 2)
 
         self.get_logger().info("The duckiebot controller initialized and waiting for commands...")
 
@@ -80,25 +80,25 @@ class RobotController(Node):
     def move_forward(self):
         self.get_logger().info("Moving forward")
         self.run_wheels('forward_callback', 0.5, 0.5)
-        self.get_clock().sleep_for(Duration(seconds=0.5))
+        self.get_clock().sleep_for(Duration(seconds=0.25))
         self.run_wheels('stop_callback', 0.0, 0.0)
 
     def move_backward(self):
         self.get_logger().info("Moving backward")
         self.run_wheels('backward_callback', -1.0, -1.0)
-        self.get_clock().sleep_for(Duration(seconds=0.5))
+        self.get_clock().sleep_for(Duration(seconds=0.25))
         self.run_wheels('stop_callback', 0.0, 0.0)
 
     def turn_left(self):
         self.get_logger().info("Turning left")
         self.run_wheels('right_callback', 0.25, 0.5)
-        self.get_clock().sleep_for(Duration(seconds=0.5))
+        self.get_clock().sleep_for(Duration(seconds=0.25))
         self.run_wheels('stop_callback', 0.0, 0.0)
 
     def turn_right(self):
         self.get_logger().info("Turning right")
         self.run_wheels('right_callback', 0.5, 0.25)
-        self.get_clock().sleep_for(Duration(seconds=0.5))
+        self.get_clock().sleep_for(Duration(seconds=0.25))
         self.run_wheels('stop_callback', 0.0, 0.0)
 
     def stop_movement(self):

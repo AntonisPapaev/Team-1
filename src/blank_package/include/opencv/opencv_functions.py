@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def find_latest_image():
     folder = "images"
-    pattern = re.compile(r"image(\d+)\.jpg")
+    pattern = re.compile(r"(\d+)\.jpg")
 
     max_num = -1
     max_file = None

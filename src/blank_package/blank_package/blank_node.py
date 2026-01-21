@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 
 import os
+
+import cv2
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import CompressedImage
@@ -28,7 +30,8 @@ class ImageSaver(Node):
             f.write(msg.data)
         self.counter += 1
         image_path = find_latest_image()
-        image = Image(image_path)
+        img = cv2.imread(image_path)
+        image = Image(img)
         error = image.find_error_from_middle()
         if error < 10:
             self.get_logger().info("LED on")

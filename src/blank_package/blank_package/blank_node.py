@@ -12,8 +12,8 @@ from duckietown_msgs.msg import LEDPattern
 from std_msgs.msg import ColorRGBA
 import numpy as np
 # from ....pidauto.robot.robot.main import RobotController
+from opencv.constants import DEVIATION
 
-DEVIATION = 0
 
 
 class ImageSaver(Node):
@@ -48,6 +48,7 @@ class ImageSaver(Node):
         # img = cv2.imread(image_path)
         image = Image(img)
         error, deviation = image.find_error_from_middle()
+        global DEVIATION
         DEVIATION = deviation
         # LEDPattern is a custom Duckietown Message
         msg = LEDPattern()

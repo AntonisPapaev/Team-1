@@ -11,8 +11,11 @@ from opencv.color_hsv import hsv_ranges
 from duckietown_msgs.msg import LEDPattern
 from std_msgs.msg import ColorRGBA
 import numpy as np
+# from ....pidauto.robot.robot.main import RobotController
 
 DEVIATION = 0
+
+
 class ImageSaver(Node):
     def __init__(self):
         super().__init__('image_saver')
@@ -48,28 +51,28 @@ class ImageSaver(Node):
         DEVIATION = deviation
         # LEDPattern is a custom Duckietown Message
         msg = LEDPattern()
-    
+
         if abs(error) < 15:
             self.get_logger().info("LED off")
-            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # front left
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # back right
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # front right
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # emt
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)] # back left
+            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # emt
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)]  # back left
         elif error > 0:
             self.get_logger().info("right LED on")
-            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0), # front left
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # back right
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # front right
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # emt
-                        ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0)] # back left
+            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0),  # front left
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # emt
+                            ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0)]  # back left
         else:
             self.get_logger().info("left LED on")
-            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # front left
-                        ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0), # back right
-                        ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0), # front right
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0), # emt
-                        ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)] # back left
+            msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
+                            ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # back right
+                            ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # front right
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # emt
+                            ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)]  # back left
         self.publisher.publish(msg)
         self.counter += 1
 

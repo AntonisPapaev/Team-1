@@ -25,16 +25,16 @@ class TofNode(Node):
             self.stop()
 
     def move_forward(self):
-        target_left, target_right = 0.5, 0.48
+        target_left, target_right = 0.208, 0.2
         if abs(error) < 15:
             self.get_logger().info("straight")
-            target_left, target_right = 0.5, 0.48
+            target_left, target_right = 0.208, 0.2
         elif error < 0:
             self.get_logger().info("right")
-            target_left, target_right = 0.0, 0.25
+            target_left, target_right = 0.0, 0.1
         else:
             self.get_logger().info("left")
-            target_left, target_right = 0.25, 0.0
+            target_left, target_right = 0.1, 0.0
 
         self.run_wheels('forward_callback', target_left, target_right)
 

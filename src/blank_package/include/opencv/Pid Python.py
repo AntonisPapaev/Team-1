@@ -15,8 +15,8 @@ from duckietown_msgs.msg import WheelsCmdStamped
 from rclpy.time import Duration
 
 
-img = Image()
-img.find_error_from_middle
+# img = Image()
+# img.find_error_from_middle
 
 
 def pid_controller(kp, ki, kd, previous_error, integral, dt, image_obj):
@@ -37,7 +37,7 @@ def main():
     time_steps = [] # Stores time points at each iteration
     control_values = [] # Stores control output at each time step
 
-if 
+# if
 
     
 

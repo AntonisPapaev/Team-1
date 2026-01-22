@@ -6,6 +6,7 @@ from rclpy.node import Node
 from std_msgs.msg import Header
 from sensor_msgs.msg import Range
 from duckietown_msgs.msg import WheelsCmdStamped
+from ....src.blank_package.blank_package.blank_node import DEVIATION as error
 
 
 class TofNode(Node):
@@ -24,7 +25,18 @@ class TofNode(Node):
             self.stop()
 
     def move_forward(self):
-        self.run_wheels('forward_callback', 0.5, 0.5)
+        target_left, target_right = 0.5, 0.48
+        if abs(error) < 15:
+            self.get_logger().info("straight")
+            target_left, target_right = 0.5, 0.48
+        elif error < 0:
+            self.get_logger().info("right")
+            target_left, target_right = 0.0, 0.25
+        else:
+            self.get_logger().info("left")
+            target_left, target_right = 0.25, 0.0
+
+        self.run_wheels('forward_callback', target_left, target_right)
 
     def stop(self):
         self.run_wheels('stop_callback', 0.0, 0.0)

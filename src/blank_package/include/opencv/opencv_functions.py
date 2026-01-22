@@ -1,9 +1,10 @@
+#!/usr/bin/python3
 import cv2
 import os
 import re
 import numpy as np
 from opencv.color_hsv import hsv_ranges
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 def find_latest_image():

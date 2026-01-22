@@ -6,7 +6,7 @@ from rclpy.node import Node
 from std_msgs.msg import Header
 from sensor_msgs.msg import Range
 from duckietown_msgs.msg import WheelsCmdStamped
-from ....src.blank_package.blank_package.blank_node import DEVIATION as error
+from blank_package.blank_node import DEVIATION as error
 
 
 class TofNode(Node):

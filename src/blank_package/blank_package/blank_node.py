@@ -24,7 +24,7 @@ class ImageSaver(Node):
         self.create_subscription(CompressedImage, f'/{self.vehicle_name}/image/compressed', self.save_image, 10)
 
     def save_image(self, msg):
-        self.get_logger().info("in save_image")
+        # self.get_logger().info("in save_image")
         if self.counter % 30 != 0:
             self.counter += 1
             return
@@ -42,10 +42,12 @@ class ImageSaver(Node):
         # img = cv2.imread(image_path)
         image = Image(img)
         error = image.find_error_from_middle()
-        if error < 10:
-            self.get_logger().info("LED on")
-        else:
+        if abs(error) < 10:
             self.get_logger().info("LED off")
+        elif error > 0:
+            self.get_logger().info("right LED off")
+        else:
+            self.get_logger().info("left LED off")
         self.counter += 1
 
 

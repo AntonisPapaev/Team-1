@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 import os
-
+import sys
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String, Header
 from duckietown_msgs.msg import WheelsCmdStamped
 from rclpy.time import Duration
-from ././././src/blank_package/blank_package/blank_node.py import DEVIATION as error
+target_directory = os.path.abspath('././././src/blank_package/blank_package')
+sys.path_append(target_directory)
+import blank_node import DEVIATION as error
 
 
 class RobotController(Node):

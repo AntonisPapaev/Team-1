@@ -150,7 +150,7 @@ class Image:
         x1, x2, y1, y2, height, width = self.find_mid_black_line()
         if x1 == -1 and height == -1:
             print("No line seen")
-            return -1
+            return -1, -1
         middle = width / 2
         signed_deviation = 0
         for i in range(10):

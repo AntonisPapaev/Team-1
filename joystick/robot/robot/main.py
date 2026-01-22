@@ -3,8 +3,8 @@ import os
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String, ColorRGBA, Header
-from duckietown_msgs.msg import LEDPattern, WheelsCmdStamped
+from std_msgs.msg import String, Header
+from duckietown_msgs.msg import WheelsCmdStamped
 from rclpy.time import Duration
 
 
@@ -30,7 +30,6 @@ class RobotController(Node):
             10
         )
         self.wheels_pub = self.create_publisher(WheelsCmdStamped, f'/{self.vehicle_name}/wheels_cmd', 1)
-        self.led_pub = self.create_publisher(LEDPattern, f'/{self.vehicle_name}/led_pattern', 1)
 
         self.deadman_timeout = 0.20 
         self.control_period = 0.03
@@ -39,13 +38,6 @@ class RobotController(Node):
 
         self.get_logger().info("The duckiebot controller initialized and waiting for commands...")
 
-    def change_led(self, color):
-        msg = LEDPattern()
-        rgb_vals = [ColorRGBA(**color) for _ in range(5)]
-        msg.rgb_vals = rgb_vals
-        self.get_logger().info(f'Changed color on duckiebot: {rgb_vals[0]}')
-        self.led_pub.publish(msg)
-
     def command_callback(self, msg):
         command = msg.data.lower().strip()
         self.last_cmd_time = self.get_clock().now()
@@ -53,31 +45,15 @@ class RobotController(Node):
         if command == 'f':
             self.target_left, self.target_right = 0.5, 0.48
         elif command == 'b':
-            self.target_left, self.target_right = -0.5, -0.5
+            self.target_left, self.target_right = -0.5, -0.48
         elif command == 'l':
-            self.target_left, self.target_right = 0.25, 0.5
+            self.target_left, self.target_right = 0.0, 0.25
         elif command == 'r':
-            self.target_left, self.target_right = 0.5, 0.25
+            self.target_left, self.target_right = 0.25, 0.0
         elif command == 's':
             self.target_left, self.target_right = 0.0, 0.0
-        elif command == 'gl':
-            color = dict(r=0.0, g=1.0, b=0.0, a=0.5)
-            self.switch_lights(color)
-        elif command == 'bl':
-            color = dict(r=0.0, g=0.0, b=1.0, a=0.5)
-            self.switch_lights(color)
-        elif command == 'rl':
-            color = dict(r=1.0, g=0.0, b=0.0, a=0.5)
-            self.switch_lights(color)
-        elif command == 'sol':
-            color = dict(r=1.0, g=1.0, b=1.0, a=0.5)
-            self.switch_lights(color)
         else:
             self.get_logger().warn(f"Unknown command: {command}")
-
-    def switch_lights(self, color):
-        self.get_logger().info(f"Switching lights to color: {color}")
-        self.change_led(color)
 
     def run_wheels(self, frame_id, vel_left, vel_right):
         

@@ -4,6 +4,8 @@ import os
 import re
 import numpy as np
 from opencv.color_hsv import hsv_ranges
+
+
 # import matplotlib.pyplot as plt
 
 
@@ -88,11 +90,17 @@ class Image:
         self.show_image(out)
         return total_area
 
+    def crop_bottom_half(self, image):
+        return image[image.shape[0] // 2:]
+
     def find_mid_black_line(self):
+        self.img = self.crop_bottom_half(self.img)
         blur = cv2.GaussianBlur(self.img, (5, 5), 0)
         hsv = cv2.cvtColor(blur, cv2.COLOR_BGR2HSV)
+        # hsv = cv2.cvtColor(hsv, cv2.COLOR_BGR2GRAY)
+        # self.show_image(hsv)
         lower_black = np.array([0, 0, 0])
-        upper_black = np.array([179, 255, 50])
+        upper_black = np.array([179, 190, 90])
         mask = cv2.inRange(hsv, lower_black, upper_black)  # within the range = white, everything else = black
         edges = cv2.Canny(mask, 50, 150)  # makes edge pixels white
         lines = cv2.HoughLinesP(edges, rho=1, theta=np.pi / 180, threshold=50, minLineLength=50, maxLineGap=10)
@@ -101,6 +109,8 @@ class Image:
 
         out = self.img.copy()
         cv2.drawContours(out, contours, -1, (0, 0, 255), 2)
+
+        # self.show_image(out)
         height, width, channels = self.img.shape
         h1 = height / 4
         h2 = height * 3 / 4

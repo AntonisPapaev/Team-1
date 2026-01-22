@@ -44,10 +44,11 @@ class ImageSaver(Node):
         error = image.find_error_from_middle()
         if abs(error) < 10:
             self.get_logger().info("LED off")
+
         elif error > 0:
-            self.get_logger().info("right LED off")
+            self.get_logger().info("right LED on")
         else:
-            self.get_logger().info("left LED off")
+            self.get_logger().info("left LED on")
         self.counter += 1
 
 

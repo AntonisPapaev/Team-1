@@ -60,7 +60,6 @@ class ImageSaver(Node):
             self.get_logger().error("Failed to decode image")
             self.counter += 1
             return
-        cv2.imwrite(os.path.join(self.output_dir, f"{self.counter}.jpg"), img)  # remove later
         # with open(self.output_dir + str(self.counter) + '.jpg', 'wb') as f:
         #     self.get_logger().info(f'Saving image {self.counter}')
         #     f.write(msg.data)

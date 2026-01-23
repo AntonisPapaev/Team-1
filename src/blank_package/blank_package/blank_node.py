@@ -98,7 +98,7 @@ class ImageSaver(Node):
 
         if abs(self.filtered_error) < 0.10:
             self.get_logger().info("LED OFF")
-            self.get_logger().info(self.filtered_error)
+            self.get_logger().info(f"{self.filtered_error}")
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
@@ -106,7 +106,7 @@ class ImageSaver(Node):
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)]  # back left
         elif self.filtered_error > 0:
             self.get_logger().info("left LED on")
-            self.get_logger().info(self.filtered_error)
+            self.get_logger().info(f"{self.filtered_error}")
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0),  # front left
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
@@ -114,7 +114,7 @@ class ImageSaver(Node):
                             ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0)]  # back left
         else:
             self.get_logger().info("right LED on")
-            self.get_logger().info(self.filtered_error)
+            self.get_logger().info(f"{self.filtered_error}")
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
                             ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # front right

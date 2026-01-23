@@ -20,15 +20,15 @@ class TofNode(Node):
             Range, f'/{self.vehicle_name}/range', self.check_range, 10
         )
         self.wheels_pub = self.create_publisher(
-            WheelsCmdStamped, f'/{self.vehicle_name}/wheels_cmd', 10
+            WheelsCmdStamped, f'/{self.vehicle_name}/wheels_cmd', 1
         )
 
         self.lane_error = 0.0
         self.lane_valid = False
         self.last_lane_time = self.get_clock().now()
 
-        self.create_subscription(Float32, f'/{self.vehicle_name}/lane_error', self.lane_error_cb, 10)
-        self.create_subscription(Bool, f'/{self.vehicle_name}/lane_valid', self.lane_valid_cb, 10)
+        self.create_subscription(Float32, f'/{self.vehicle_name}/lane_error', self.lane_error_cb, 1)
+        self.create_subscription(Bool, f'/{self.vehicle_name}/lane_valid', self.lane_valid_cb, 1)
 
         # Parameters (give non-zero safe defaults)
         self.lost_lane_behavior = self.declare_parameter('lost_lane_behavior', 'search').value

@@ -46,8 +46,8 @@ class ImageSaver(Node):
         self.create_subscription(CompressedImage, f'/{self.vehicle_name}/image/compressed', self.save_image, 10)
         self.publisher = self.create_publisher(LEDPattern, f'/{self.vehicle_name}/led_pattern', 1)
 
-        self.lane_error_pub = self.create_publisher(Float32, f'/{self.vehicle_name}/lane_error', 10)
-        self.lane_valid_pub = self.create_publisher(Bool, f'/{self.vehicle_name}/lane_valid', 10)
+        self.lane_error_pub = self.create_publisher(Float32, f'/{self.vehicle_name}/lane_error', 1)
+        self.lane_valid_pub = self.create_publisher(Bool, f'/{self.vehicle_name}/lane_valid', 1)
 
     def save_image(self, msg):
         # self.get_logger().info("in save_image")
@@ -97,7 +97,8 @@ class ImageSaver(Node):
         led_msg = LEDPattern()
 
         if abs(self.filtered_error) < 0.10:
-            self.get_logger().info("LED ON")
+            self.get_logger().info("LED OFF")
+            self.get_logger().info(self.filtered_error)
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
@@ -105,6 +106,7 @@ class ImageSaver(Node):
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0)]  # back left
         elif self.filtered_error > 0:
             self.get_logger().info("left LED on")
+            self.get_logger().info(self.filtered_error)
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0),  # front left
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front right
@@ -112,6 +114,7 @@ class ImageSaver(Node):
                             ColorRGBA(r=0.0, g=0.0, b=1.0, a=1.0)]  # back left
         else:
             self.get_logger().info("right LED on")
+            self.get_logger().info(self.filtered_error)
             led_msg.rgb_vals = [ColorRGBA(r=0.0, g=0.0, b=0.0, a=1.0),  # front left
                             ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # back right
                             ColorRGBA(r=1.0, g=0.0, b=0.0, a=1.0),  # front right
